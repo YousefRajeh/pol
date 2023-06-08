@@ -24,7 +24,7 @@ import edu.gmu.mason.vanilla.log.State;
  */
 public class FoodNeed implements Need, java.io.Serializable {
 	private static final long serialVersionUID = 1247800092072951966L;
-	private static double MAX_FULLNESS = 100;
+	private static double MAX_FULLNESS = Integer.MAX_VALUE; //previously 100, changed to make hungry.
 
 	@State
 	private double fullness;
@@ -87,7 +87,7 @@ public class FoodNeed implements Need, java.io.Serializable {
 	public void update() {
 		
 		// calculate the minute difference since last time eaten which will update the fullness
-		int minuteDiff = Minutes.minutesBetween(lastTimeAte,
+		int minuteDiff = 20*Minutes.minutesBetween(lastTimeAte,
 				agent.getSimulationTime()).getMinutes();
 		
 		//// (if statements below shows the effect of eating characteristics on Food Need Status and fullness)
@@ -335,12 +335,12 @@ public class FoodNeed implements Need, java.io.Serializable {
 		}
 		// low appetite slow mechanism to reach fullness
 		fullnessReachTimeInMinutes = 60 - appetite * 30;
-		keepingFullTimeInMinutes = 180 - appetite * 60;
+		keepingFullTimeInMinutes = 0;
 
 		fullnessDecreasePerStep = this.agent.getModel().getMinutePerStep()
-				* appetite * 0.65;
-		hungryTreshold = 30 + 20 * appetite;
-		starvingTreshold = 0;
+				* appetite * 20000000;
+		hungryTreshold = 60 + 20 * appetite;
+		starvingTreshold = 10;
 	}
 
 	public double getAppetite() {
