@@ -75,7 +75,7 @@ public class ShelterNeed implements Need, java.io.Serializable {
 					findGhostHouse();
 				}
 
-				checkHomelessness();
+				//checkHomelessness();
 
 				return;
 			}
@@ -101,7 +101,7 @@ public class ShelterNeed implements Need, java.io.Serializable {
 					findGhostHouse();
 				}
 				
-				checkHomelessness();
+				//checkHomelessness();
 				
 			}
 		}

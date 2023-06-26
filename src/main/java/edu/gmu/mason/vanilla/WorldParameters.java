@@ -45,8 +45,8 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final int NUM_APARTMENTS_PER_1000 = 1500;
 	public static final int NUM_WORKPLACES_PER_1000 = 250;
 	public static final int NUM_PUBS_PER_1000 = 10;
-	public static final int NUM_RESTAURANTS_PER_1000 = 200;
-	public static final int NUM_OF_AGENTS = 250;
+	public static final int NUM_RESTAURANTS_PER_1000 = 20; //original 20, changed to 200.
+	public static final int NUM_OF_AGENTS = 50; //testing with 50 agents instead of 250
 	public static final int NUM_OF_AGENT_INTERESTS = 10;
 	public static final double BASE_RENT_RATE = 500;
 	public static final String DEFAULT_MAPS = "campus_data";
@@ -65,9 +65,9 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final double AGENT_WALKING_SPEED = 1.4;
 	public static final double RES_CHARGE_LOWER_BOUND = 4.0;
 	public static final double RES_CHARGE_UPPER_BOUND = 6.0;
-	public static final double APPETITE_LOWER_BOUND = 1.8;
-	public static final double APPETITE_UPPER_BOUND = 2.0;
-	public static final double DEFAULT_APPETITE_VALUE = 2.0;
+	public static final double APPETITE_LOWER_BOUND = 0.2; //original 0.2 changed to 1.8
+	public static final double APPETITE_UPPER_BOUND = 0.8; //original 0.8 changed to 2.0
+	public static final double DEFAULT_APPETITE_VALUE = 0.5; //original 0.5 changed to 2.0
 
 	// FINANCE
 	public static final double MEAL_COST_AT_HOME = 4.0;
