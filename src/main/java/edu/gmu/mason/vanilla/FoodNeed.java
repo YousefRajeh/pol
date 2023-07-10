@@ -24,7 +24,7 @@ import edu.gmu.mason.vanilla.log.State;
  */
 public class FoodNeed implements Need, java.io.Serializable {
 	private static final long serialVersionUID = 1247800092072951966L;
-	private static double MAX_FULLNESS = 100; //tested with Integer.MAX_VALUE, changed to make hungry. original 100
+	private static double MAX_FULLNESS = 100;
 
 	@State
 	private double fullness;
@@ -88,7 +88,7 @@ public class FoodNeed implements Need, java.io.Serializable {
 		
 		// calculate the minute difference since last time eaten which will update the fullness
 		int minuteDiff = Minutes.minutesBetween(lastTimeAte,
-				agent.getSimulationTime()).getMinutes(); //multiplied by 20 to make it faster, original has 1 coefficient.
+				agent.getSimulationTime()).getMinutes();
 		
 		//// (if statements below shows the effect of eating characteristics on Food Need Status and fullness)
 		switch (this.status) {
@@ -144,7 +144,7 @@ public class FoodNeed implements Need, java.io.Serializable {
 		AgentMobility mobility = agent.getMobility();
 		DailyPlan dailyPlanForToday = agent.getTodaysPlan();
 
-		/* if (status == FoodNeedStatus.Starving
+		if (status == FoodNeedStatus.Starving
 				&& Days.daysBetween(lastTimeAte, model.getSimulationTime())
 						.getDays() > model.params.maxDaysToBeStarving
 				&& currentMode != PersonMode.AtRestaurant) { // don't let the
@@ -154,7 +154,7 @@ public class FoodNeed implements Need, java.io.Serializable {
 																// already.
 			agent.exitTheWorld(LifeStatus.DiedDueStarving); // RIP
 			return;
-		} */
+		}
 
 		if (isSatisfied() == false && currentMode != PersonMode.Transport
 				&& currentMode != PersonMode.AtRestaurant) { // if agent is
@@ -335,12 +335,12 @@ public class FoodNeed implements Need, java.io.Serializable {
 		}
 		// low appetite slow mechanism to reach fullness
 		fullnessReachTimeInMinutes = 60 - appetite * 30;
-		keepingFullTimeInMinutes = (180*0.75) - (appetite * 60); //changed to 0 and (180*0.75) - (appetite * 60) works best, original 180 - appetite * 60
+		keepingFullTimeInMinutes = 180 - appetite * 60;
 
 		fullnessDecreasePerStep = this.agent.getModel().getMinutePerStep()
-				* appetite * 2.3; //changed to 20000000, 1.5, 2.0, 3.0, 2.3 works best, original appetite * 0.65
-		hungryTreshold = 30 + 20 * appetite; //changed to 60 + 20 * appetite, original 30 + 20 * appetite
-		starvingTreshold = 0; //changed to 10, original 0
+				* appetite * 0.65;
+		hungryTreshold = 30 + 20 * appetite;
+		starvingTreshold = 0;
 	}
 
 	public double getAppetite() {
