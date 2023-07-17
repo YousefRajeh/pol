@@ -46,7 +46,7 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final int NUM_WORKPLACES_PER_1000 = 250;
 	public static final int NUM_PUBS_PER_1000 = 10;
 	public static final int NUM_RESTAURANTS_PER_1000 = 20;
-	public static final int NUM_OF_AGENTS = 250;
+	public static final int NUM_OF_AGENTS = 100;
 	public static final int NUM_OF_AGENT_INTERESTS = 10;
 	public static final double BASE_RENT_RATE = 500;
 	public static final String DEFAULT_MAPS = "campus_data";
@@ -108,14 +108,14 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final int MAX_DAYS_TO_EXPIRE_FOR_PUB_PROFILE = 30;
 
 	// SOCIALITY
-	public static final int DEFAULT_TRAVEL_TIME_IN_MINUTES = 30;
+	public static final int DEFAULT_TRAVEL_TIME_IN_MINUTES = 10;
 	public static final int NUMBER_OF_DAYS_TO_CONSIDER_FOR_MEASURING_SOCIAL_STATUS = 5;
-	public static final double INITIAL_SOCIAL_STATUS_WEIGHT = 0.5;
-	public static final double SOCIAL_STATUS_DECAY_FACTOR = 0.8;
+	public static final double INITIAL_SOCIAL_STATUS_WEIGHT = 0.6;
+	public static final double SOCIAL_STATUS_DECAY_FACTOR = 0.8 * 1.1;
 	public static final double MAX_SOCIAL_STATUS_VALUE = 1.0;
-	public static final double MIN_SOCIAL_STATUS_VALUE = 0.01;
-	public static final double SOCIAL_STATUS_INCREASE_VALUE = 0.07;
-	public static final double SOCIAL_STATUS_DECREASE_VALUE = 0.03;
+	public static final double MIN_SOCIAL_STATUS_VALUE = 0.1;
+	public static final double SOCIAL_STATUS_INCREASE_VALUE = 0.07 * 30;   /*** increase by multiplicative factor to get more socialization vs decrease for less socialization  ***/
+	public static final double SOCIAL_STATUS_DECREASE_VALUE = 0.03 * 0.03; /*** decrease by multiplicative factor to get more socialization vs increase for less socialization  ***/
 
 	// NEIGHBORHOOD
 	public static final double ATTRACTIVENESS_LOWER_BOUND = 0.0;

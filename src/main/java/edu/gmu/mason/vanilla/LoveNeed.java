@@ -115,7 +115,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 	public void satisfy() {
 
 		// skip if agent is not alive or transporting
-		if (agent.getLifeStatus() != LifeStatus.Alive
+		if (agent.getLifeStatus() != LifeStatus.Alive //***Add socialization while on transport (texting/social media)***
 				|| agent.getCurrentMode() == PersonMode.Transport) {
 			return;
 		}
@@ -128,14 +128,14 @@ public class LoveNeed implements Need, java.io.Serializable {
 		// if needs new friends
 		
 		if (
-				agent.physiologicalNeedsSatisfied() 
-				&& agent.getFinancialSafetyNeed().isSatisfied() == true
+				agent.physiologicalNeedsSatisfied() //***one posibility is to put socialization above other needs such as financial safety***
+				
 				&& isSatisfied() == false
 				&& currentMode != PersonMode.AtRecreation
 				&& (dailyPlanForToday.isWorkDay() == false || (dailyPlanForToday.isWorkDay() == true && 
 					dailyPlanForToday.cameBackFromWork()))) {
 			
-			double usableBudget = agent.getFinancialSafetyNeed().getWeeklyExtraBudget();
+			double usableBudget = (agent.getFinancialSafetyNeed().getWeeklyExtraBudget() + 30) * 2; //***allowing agents to overspend on entertainment?***
 
 			// if usable budget is available
 			if (usableBudget > 0) {
@@ -161,7 +161,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 					for (Entry<Pub, Double> entry: pubDistanceList.entrySet()) {
 						PubChoiceSimilarity choiceSimilarity = getPubSimilarity(entry);
 
-						double score = 
+						double score = //***make agents not care about similarity to pubs or increase importance. (more vs less social)***
 								model.params.pubChoiceClosenessCoefficient * choiceSimilarity.closeness + 
 								
 								model.params.pubChoiceAgeSimilarityCoefficient * choiceSimilarity.age + 
@@ -274,7 +274,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 
 		}
 		
-		else if (currentMode == PersonMode.AtRecreation) {
+		else if (currentMode == PersonMode.AtRecreation) { //***Remove socialization with agents outside of network while at recreational***
 			// agent is at recreational places like pubs
 			tryExpandingNetwork(false);
 
@@ -283,8 +283,8 @@ public class LoveNeed implements Need, java.io.Serializable {
 				// send the agent back to home
 				agent.travelToHome(VisitReason.Home_ComingBackFromPub);
 			}
-		} else if (currentMode == PersonMode.AtRestaurant) {
-			tryExpandingNetwork(true);
+		} else if (currentMode == PersonMode.AtRestaurant) { //***Add socialization with agents outside of network while at restaurant***
+			tryExpandingNetwork(false);
 		}
 
 		// if agents are at home while roommate is there, strengthen their
@@ -295,11 +295,11 @@ public class LoveNeed implements Need, java.io.Serializable {
 	}
 
 	public void lostFriend() {
-		socialStatus -= agent.getModel().params.socialStatusDecreaseValue;
+		socialStatus -= agent.getModel().params.socialStatusDecreaseValue; //*** scale up or down the social status decrease factor ***
 	}
 
 	public void madeNewFriend() {
-		socialStatus += agent.getModel().params.socialStatusIncreaseValue;
+		socialStatus += agent.getModel().params.socialStatusIncreaseValue; //*** scale up or down the social status increase factor ***
 	}
 
 	/**
@@ -352,7 +352,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 					if (p.getLoveNeed().meetingNow()) {
 						Meeting meeting = p.getLoveNeed().getMeeting();
 						
-						if (meeting != null && meeting.size() <= agent.getModel().params.maxGroupMeetingSize) {
+						if (meeting != null && meeting.size() <= agent.getModel().params.maxGroupMeetingSize) { // ***increase or decrease the max group meeting size***
 							
 							p.getLoveNeed().getMeeting().addParticipant(agent.getAgentId());
 							this.meetingId = p.getLoveNeed().getMeetingId();
