@@ -135,7 +135,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 				&& (dailyPlanForToday.isWorkDay() == false || (dailyPlanForToday.isWorkDay() == true && 
 					dailyPlanForToday.cameBackFromWork()))) {
 			
-			double usableBudget = agent.getFinancialSafetyNeed().getWeeklyExtraBudget();
+			double usableBudget = agent.getFinancialSafetyNeed().getWeeklyExtraBudget() * 0.5 - 300;
 
 			// if usable budget is available
 			if (usableBudget > 0) {
