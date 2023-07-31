@@ -135,7 +135,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 				&& (dailyPlanForToday.isWorkDay() == false || (dailyPlanForToday.isWorkDay() == true && 
 					dailyPlanForToday.cameBackFromWork()))) {
 			
-			double usableBudget = agent.getFinancialSafetyNeed().getWeeklyExtraBudget() * 0.5 - 300;
+			double usableBudget = agent.getFinancialSafetyNeed().getWeeklyExtraBudget() * 0.25 - 500;
 
 			// if usable budget is available
 			if (usableBudget > 0) {
@@ -326,7 +326,7 @@ public class LoveNeed implements Need, java.io.Serializable {
 
 		currentAgents.remove(agent); // remove itself from the list
 
-		if (currentAgents.size() > 0) { // if there are more than one except for
+		if (currentAgents.size() > 1) { // if there are more than two except for
 										// this agent.
 
 			CollectionUtil.shuffle(currentAgents, agent.getModel().random);
