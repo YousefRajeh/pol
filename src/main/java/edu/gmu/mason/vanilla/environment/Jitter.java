@@ -12,13 +12,13 @@ public class Jitter implements java.io.Serializable {
 	private double x;
 	private double y;
 	private boolean applied;
-	
+
 	public Jitter(double x, double y) {
 		this.x = x;
 		this.y = y;
 		applied = false;
 	}
-	
+
 	public double getX() {
 		return x;
 	}
@@ -30,9 +30,9 @@ public class Jitter implements java.io.Serializable {
 	public boolean isApplied() {
 		return applied;
 	}
+
 	public void setApplied(boolean applied) {
 		this.applied = applied;
 	}
-	
-	
+
 }

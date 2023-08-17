@@ -11,7 +11,8 @@ import edu.gmu.mason.vanilla.log.Skip;
 /**
  * General description_________________________________________________________
  * A class to represent shelters that agents live.
-  * @author Hamdi Kavak (hkavak at gmu.edu)
+ * 
+ * @author Hamdi Kavak (hkavak at gmu.edu)
  * 
  */
 @Referenceable(keyMethod = "getId", keyType = Long.class)
@@ -19,7 +20,7 @@ public class Apartment extends BuildingUnit {
 
 	private static final long serialVersionUID = -2153189207690107338L;
 	private double rentalCost;
-	
+
 	@Skip
 	private Household household;
 
@@ -38,7 +39,7 @@ public class Apartment extends BuildingUnit {
 
 	public double getRentalCostPerPerson() {
 		List<Person> households = this.household.getMembers();
-		
+
 		double costPerPerson = rentalCost / (double) households.size();
 
 		return costPerPerson;

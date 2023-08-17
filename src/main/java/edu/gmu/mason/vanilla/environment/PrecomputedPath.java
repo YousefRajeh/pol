@@ -15,10 +15,10 @@ public class PrecomputedPath implements java.io.Serializable {
 	private static final long serialVersionUID = 5586993133673885356L;
 	private ArrayList<GeomPlanarGraphDirectedEdge> path;
 	private double length;
-	private boolean isForward;	
-	
+	private boolean isForward;
+
 	public PrecomputedPath() {
-		
+
 	}
 
 	public ArrayList<GeomPlanarGraphDirectedEdge> getPath() {
@@ -28,7 +28,7 @@ public class PrecomputedPath implements java.io.Serializable {
 	public void setPath(ArrayList<GeomPlanarGraphDirectedEdge> path) {
 		this.path = path;
 	}
-	
+
 	public boolean contains(GeomPlanarGraphDirectedEdge edge) {
 		return path.contains(edge);
 	}

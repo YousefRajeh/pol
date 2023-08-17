@@ -137,20 +137,24 @@ public class NeighborhoodComposition {
 	}
 
 	public EducationLevel generateEducationLevelRequirementForJobs() {
-		UniformRealDistribution uRNG = new UniformRealDistribution(rng, 0.0,
-				params.EDUCATION_REQ_GRADUATE);
-		double percentile = uRNG.sample();
 
-		if (percentile <= params.EDUCATION_REQ_LOW) {
-			return EducationLevel.Low;
-		} else if (percentile <= params.EDUCATION_REQ_HS_COLLEGE) {
-			return EducationLevel.HighSchoolOrCollege;
-		} else if (percentile <= params.EDUCATION_REQ_BACHELORS) {
-			return EducationLevel.Bachelors;
-		} else if (percentile <= params.EDUCATION_REQ_GRADUATE) {
-			return EducationLevel.Graduate;
-		}
-		return EducationLevel.Unknown;
+		return EducationLevel.Low;
+		/*
+		 * UniformRealDistribution uRNG = new UniformRealDistribution(rng, 0.0,
+		 * params.EDUCATION_REQ_GRADUATE);
+		 * double percentile = uRNG.sample();
+		 * 
+		 * if (percentile <= params.EDUCATION_REQ_LOW) {
+		 * return EducationLevel.Low;
+		 * } else if (percentile <= params.EDUCATION_REQ_HS_COLLEGE) {
+		 * return EducationLevel.HighSchoolOrCollege;
+		 * } else if (percentile <= params.EDUCATION_REQ_BACHELORS) {
+		 * return EducationLevel.Bachelors;
+		 * } else if (percentile <= params.EDUCATION_REQ_GRADUATE) {
+		 * return EducationLevel.Graduate;
+		 * }
+		 * return EducationLevel.Unknown;
+		 */
 	}
 
 	public int generateNumberOfRoomsForApartments() {
@@ -176,7 +180,8 @@ public class NeighborhoodComposition {
 		// let's not cross the minimum or maximum hourly rates
 		return Math.min(
 				Math.max(params.minimumHourlyRate, lnAmount
-						* getPayScale(level)), params.maximumHourlyRate);
+						* getPayScale(level)),
+				params.maximumHourlyRate);
 	}
 
 	public List<DayOfWeek> generateWorkDays(EducationLevel level) {

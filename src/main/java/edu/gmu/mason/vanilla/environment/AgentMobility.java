@@ -61,8 +61,8 @@ public class AgentMobility implements java.io.Serializable {
 
 	// to calculate travel distance
 	private LocalDateTime previousTime;
-	//private LocalDateTime travelBeginTime;
-	
+	// private LocalDateTime travelBeginTime;
+
 	private VisitReason currentTravelReason;
 	// index for 'path' starting from 0
 	private int currentPathIndex = 0;
@@ -101,11 +101,12 @@ public class AgentMobility implements java.io.Serializable {
 		isForward = precomputedPath.isForward();
 		// let's move in the next step. just set up time
 		previousTime = agent.getSimulationTime();
-		//travelBeginTime = agent.getSimulationTime();
+		// travelBeginTime = agent.getSimulationTime();
 		plannedVisitLength = travel.getPlannedVisitLength();
-		
+
 		// finish an existing journal record
-		// check journal record. if there is a record, that means the agent is leaving a place now.
+		// check journal record. if there is a record, that means the agent is leaving a
+		// place now.
 		if (agent.getCurrentJournal() != null) {
 			agent.endCurrentJournalRecord();
 		}
@@ -144,7 +145,7 @@ public class AgentMobility implements java.io.Serializable {
 			currentIndex += intervalSecond * moveRate * walkingSpeed;
 			int i = currentPathIndex;
 			if (isForward) {
-				if(startIndex == 0.0) 
+				if (startIndex == 0.0)
 					i = 0;
 				for (; i < path.size(); i++) {
 					currentPathIndex = i;
@@ -189,7 +190,7 @@ public class AgentMobility implements java.io.Serializable {
 				}
 			} else {
 				// reverse
-				if(startIndex == 0.0) 
+				if (startIndex == 0.0)
 					i = path.size() - 1;
 				for (; i > 0; i--) {
 					currentPathIndex = i;
@@ -241,7 +242,7 @@ public class AgentMobility implements java.io.Serializable {
 			currentIndex = 0.0;
 			currentPathIndex = 0;
 			startIndex = 0.0;
-			
+
 			// now entering the building
 			if (agent.getCurrentJournal() != null) {
 				JournalRecord record = agent.getCurrentJournal();
@@ -251,7 +252,7 @@ public class AgentMobility implements java.io.Serializable {
 				record.setTravelEndLocationId(destinationUnit.getId());
 				record.setTravelEndPlaceType(destinationMode);
 			}
-			
+
 			// The agent arrived at the destination and current mode will change
 			agent.setCurrentMode(destinationMode);
 			agent.setCurrentUnit(destinationUnit);

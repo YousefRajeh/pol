@@ -6,6 +6,7 @@ import edu.gmu.mason.vanilla.ExpenseType;
 import edu.gmu.mason.vanilla.Person;
 import edu.gmu.mason.vanilla.log.Characteristics;
 import edu.gmu.mason.vanilla.log.Referenceable;
+
 /**
  * General description_________________________________________________________
  * Restaurant class for serving agents food.
@@ -17,12 +18,12 @@ import edu.gmu.mason.vanilla.log.Referenceable;
 public class Restaurant extends BuildingUnit {
 
 	private static final long serialVersionUID = 3151976049564919545L;
-	
+
 	@Characteristics
 	private double foodCost;
 	private LocalTime startTime;
 	private LocalTime endTime;
-	
+
 	public Restaurant(long id, Building building) {
 		super(id, building, "Restaurant");
 	}
@@ -53,7 +54,7 @@ public class Restaurant extends BuildingUnit {
 
 	@Override
 	public void agentLeaves(Person agent) {
-	
+
 		// agent pays the cost
 		agent.getFinancialSafetyNeed().withdrawMoney(foodCost, ExpenseType.Food);
 		agent.getFoodNeed().justAte();
@@ -61,5 +62,5 @@ public class Restaurant extends BuildingUnit {
 		// remove from the building as well.
 		super.agentLeaves(agent);
 	}
-	
+
 }

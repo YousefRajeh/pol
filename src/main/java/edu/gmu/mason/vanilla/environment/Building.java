@@ -28,7 +28,7 @@ public class Building implements java.io.Serializable {
 	@Characteristics
 	private BuildingType buildingType;
 	@Characteristics
- 	private double attractivenessPercentile;
+	private double attractivenessPercentile;
 	@Characteristics
 	private double attractiveness;
 	@Characteristics
@@ -83,14 +83,14 @@ public class Building implements java.io.Serializable {
 	public void setAttractiveness(double attractiveness) {
 		this.attractiveness = attractiveness;
 	}
-	
-	public double getAttractivenessPercentile() {
- 		return attractivenessPercentile;
- 	}
 
-  	public void setAttractivenessPercentile(double attractivenessPercentile) {
- 		this.attractivenessPercentile = attractivenessPercentile;
- 	}
+	public double getAttractivenessPercentile() {
+		return attractivenessPercentile;
+	}
+
+	public void setAttractivenessPercentile(double attractivenessPercentile) {
+		this.attractivenessPercentile = attractivenessPercentile;
+	}
 
 	public List<BuildingUnit> getUnits() {
 		return units;

@@ -130,7 +130,7 @@ public class SpatialNetwork implements java.io.Serializable {
 	// Movement/Geography-related methods
 	public void loadMapLayers(String directory, String walkwayShapefile,
 			String buildingShapefile, String buildingUnitShapefile)
-					throws IOException, Exception {
+			throws IOException, Exception {
 		URL codeBase = WorldModel.class.getProtectionDomain().getCodeSource()
 				.getLocation();
 		// Must be a jar.
@@ -173,6 +173,32 @@ public class SpatialNetwork implements java.io.Serializable {
 
 		walkwayNetwork.createFromGeomField(walkwayLayer);
 	}
+
+	/*
+	 * public void loadMapLayers(String walkwayShapefile,
+	 * String buildingShapefile, String buildingUnitShapefile
+	 * ) throws IOException, Exception {
+	 * URL codeBase = WorldModel.class.getProtectionDomain().getCodeSource()
+	 * .getLocation();
+	 * // Must be a jar.
+	 * if (codeBase.getPath().endsWith(".jar")) {
+	 * } else {
+	 * // walkway map
+	 * URL geometry = WorldModel.class.getResource(walkwayShapefile);
+	 * ShapeFileImporter.read(geometry, walkwayLayer);
+	 * 
+	 * geometry = WorldModel.class.getResource(buildingShapefile);
+	 * ShapeFileImporter.read(geometry, buildingLayer);
+	 * 
+	 * geometry = WorldModel.class.getResource(buildingUnitShapefile);
+	 * ShapeFileImporter.read(geometry, buildingUnitLayer);
+	 * }
+	 * 
+	 * createBuildingUnitTable();
+	 * 
+	 * walkwayNetwork.createFromGeomField(walkwayLayer);
+	 * }
+	 */
 
 	private void createBuildingUnitTable() {
 		for (Object obj : buildingUnitLayer.getGeometries()) {
@@ -261,7 +287,7 @@ public class SpatialNetwork implements java.io.Serializable {
 			path.setLength(lengthOfRoad);
 			path.setPath(pathToReturn);
 			path.setForward(true);
-			
+
 			if (savePath == true) {
 				// store the path
 				this.preComputedPaths.put(fromTo, path);
@@ -291,7 +317,7 @@ public class SpatialNetwork implements java.io.Serializable {
 		return key;
 	}
 
-	public  MultiKey getKey(MasonGeometry geo) {
+	public MultiKey getKey(MasonGeometry geo) {
 		Coordinate coord = geo.getGeometry().getCoordinate();
 		return new MultiKey(coord.x, coord.y);
 	}
@@ -300,10 +326,27 @@ public class SpatialNetwork implements java.io.Serializable {
 		return new MultiKey(from.getKey(0), from.getKey(1), to.getKey(0),
 				to.getKey(1));
 	}
-	
+
+	/*
+	 * public double getDistance(MasonGeometry origin, MasonGeometry destination,
+	 * boolean savePath) {
+	 * Travel travel = new Travel(origin, destination, 0, VisitReason.None);
+	 * return getPath(travel, savePath).getLength();
+	 * }
+	 * 
+	 * public double getDistance(MasonGeometry origin, MasonGeometry destination) {
+	 * return getDistance(origin, destination, false);
+	 * }
+	 */
+
 	public double getDistance(MasonGeometry origin, MasonGeometry destination, boolean savePath) {
-		Travel travel = new Travel(origin, destination, 0, VisitReason.None);
-		return getPath(travel, savePath).getLength();
+		// Travel travel = new Travel(origin, destination, 0, VisitReason.None);
+		// return getPath(travel, savePath).getLength();
+		Coordinate xnode = origin.getGeometry().getCoordinate();
+		Coordinate ynode = destination.getGeometry().getCoordinate();
+		// System.out.println("getDistance: Finished");
+		return Math.sqrt(Math.pow(xnode.x - ynode.x, 2)
+				+ Math.pow(xnode.y - ynode.y, 2));
 	}
 
 	public double getDistance(MasonGeometry origin, MasonGeometry destination) {
@@ -316,7 +359,7 @@ public class SpatialNetwork implements java.io.Serializable {
 	 * @param destination
 	 * @param minutePerStep
 	 * @param speed
-	 *            unit is meter/second
+	 *                      unit is meter/second
 	 * @return
 	 */
 	public int getDistanceAsTicks(MasonGeometry origin,
@@ -348,7 +391,7 @@ public class SpatialNetwork implements java.io.Serializable {
 	 * @param origin
 	 * @param destination
 	 * @param speed
-	 *            unit is meter/second
+	 *                    unit is meter/second
 	 * @return
 	 */
 	public double getEstimatedTravelTime(MasonGeometry origin,
@@ -367,20 +410,21 @@ public class SpatialNetwork implements java.io.Serializable {
 
 		return layers;
 	}
-	
+
 	/**
 	 * Clears all the pre-computed paths
 	 */
 	public void clearPrecomputedPaths() {
-		MapIterator iter =  preComputedPaths.mapIterator();
-		
-		while(iter.hasNext()) {
+		MapIterator iter = preComputedPaths.mapIterator();
+
+		while (iter.hasNext()) {
 			iter.next();
 			iter.remove();
 		}
 		/*
-		preComputedPaths.clear();
-		preComputedPaths = null;*/
+		 * preComputedPaths.clear();
+		 * preComputedPaths = null;
+		 */
 		preComputedPaths = new MultiKeyMap();
 	}
 

@@ -14,22 +14,27 @@ public class VisitorLog implements java.io.Serializable {
 	private double age;
 	private double income;
 	private AgentInterest interest;
-	
+
 	public double getAge() {
 		return age;
 	}
+
 	public void setAge(double age) {
 		this.age = age;
 	}
+
 	public double getIncome() {
 		return income;
 	}
+
 	public void setIncome(double income) {
 		this.income = income;
 	}
+
 	public AgentInterest getInterest() {
 		return interest;
 	}
+
 	public void setInterest(AgentInterest interest) {
 		this.interest = interest;
 	}

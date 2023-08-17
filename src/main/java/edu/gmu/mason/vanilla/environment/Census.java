@@ -61,7 +61,7 @@ public class Census implements java.io.Serializable {
 		CensusData neighborhoodCensus = neighborhoods.get(neighborhoodId);
 
 		neighborhoodCensus.population++;
-		
+
 		neighborhoodCensus.numOfHouseholds++;
 
 		double income = agent.getFinancialSafetyNeed().projectedMonthlyIncome();
@@ -77,7 +77,7 @@ public class Census implements java.io.Serializable {
 
 	private void addApartment(Apartment apt) {
 		int neighborhoodId = apt.getNeighborhoodId();
-		
+
 		checkOrCreate(neighborhoodId);
 
 		CensusData neighborhoodCensus = neighborhoods.get(neighborhoodId);

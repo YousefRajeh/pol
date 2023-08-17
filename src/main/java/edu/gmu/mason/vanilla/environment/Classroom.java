@@ -13,9 +13,9 @@ import edu.gmu.mason.vanilla.log.Referenceable;
 public class Classroom extends BuildingUnit {
 
 	private static final long serialVersionUID = -8311839371061911438L;
-	
+
 	private double monthlyCost;
-	
+
 	public Classroom(long id, Building building) {
 		super(id, building, "Classroom");
 		monthlyCost = 100;
@@ -28,5 +28,5 @@ public class Classroom extends BuildingUnit {
 	public void setMonthlyCost(double monthlyCost) {
 		this.monthlyCost = monthlyCost;
 	}
-	
+
 }

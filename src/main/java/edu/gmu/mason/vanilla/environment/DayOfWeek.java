@@ -11,8 +11,10 @@ import org.joda.time.DateTimeConstants;
  */
 public enum DayOfWeek {
 	Monday(DateTimeConstants.MONDAY), Tuesday(DateTimeConstants.TUESDAY), Wednesday(
-			DateTimeConstants.WEDNESDAY), Thursday(DateTimeConstants.THURSDAY), Friday(
-			DateTimeConstants.FRIDAY), Saturday(DateTimeConstants.SATURDAY), Sunday(
+			DateTimeConstants.WEDNESDAY),
+	Thursday(DateTimeConstants.THURSDAY), Friday(
+			DateTimeConstants.FRIDAY),
+	Saturday(DateTimeConstants.SATURDAY), Sunday(
 			DateTimeConstants.SUNDAY);
 
 	private int index;

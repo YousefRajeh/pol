@@ -40,7 +40,7 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 	private LocalDateTime workingInThisJobSince;
 	@Skip
 	private List<Charge> currentCharges;
-	
+
 	@State
 	private FinancialStatus status = FinancialStatus.Unknown;
 	@State
@@ -69,7 +69,7 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 		} else if (agent.getCharacteristic() == AgentCharacteristic.Sociolus) {
 			dailyFoodBudget = params.mealCostAtHome * 5;
 		}
-		
+
 		weeklyExtraBudget = 0; // resets weekly budget
 
 		if (isEmployed() == true
@@ -77,12 +77,10 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 																	// financial
 																	// stability
 
-			
-			
 			// projected money by the end of the month
 			double projectedMoney = availableBalance
 					+ projectedMonthlyIncomeForRemainingDays();
-			
+
 			int numOfDaysRemaining = agent.getSimulationTime().dayOfMonth()
 					.getMaximumValue()
 					- agent.getSimulationTime().getDayOfMonth() + 1;
@@ -91,10 +89,11 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 			double projectedFoodCost = numOfDaysRemaining * dailyFoodBudget;
 
 			double education = agent.hasFamily() == true
-					&& agent.getFamily().haveKids() ? agent.getFamily()
-					.getClassroom().getMonthlyCost() : 0;
-					
-					
+					&& agent.getFamily().haveKids()
+							? agent.getFamily()
+									.getClassroom().getMonthlyCost()
+							: 0;
+
 			double rent = agent.getShelter().getRentalCostPerPerson();
 
 			// targeted saving amount with respect to rent
@@ -114,30 +113,30 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 				double numberOfWeeksRemainingThisMonth = Math.max(
 						numOfDaysRemaining / 7.0, 1);
 				weeklyExtraBudget = projectedExtraMoney / numberOfWeeksRemainingThisMonth;
-				
-				// calculate weekly budget based on agent characteristic
-				
-				// following statements check if the agent is not Sociolus and adjust weekly balance accordingly
-				switch (agent.getCharacteristic()) {
-				case Croesus:
-					// if too greedy but love need is below okay
-					if (agent.getLoveNeed().getStatus().getIndex() < LoveNeedStatus.OK.getIndex()) {
-						weeklyExtraBudget = weeklyExtraBudget / 2.0;
-					} else {
-						weeklyExtraBudget = weeklyExtraBudget / 4.0;
-					}
 
-					break;
-					
-				case Balancus:
-					weeklyExtraBudget = weeklyExtraBudget / 2.0;
-					break;
-					
+				// calculate weekly budget based on agent characteristic
+
+				// following statements check if the agent is not Sociolus and adjust weekly
+				// balance accordingly
+				switch (agent.getCharacteristic()) {
+					case Croesus:
+						// if too greedy but love need is below okay
+						if (agent.getLoveNeed().getStatus().getIndex() < LoveNeedStatus.OK.getIndex()) {
+							weeklyExtraBudget = weeklyExtraBudget / 2.0;
+						} else {
+							weeklyExtraBudget = weeklyExtraBudget / 4.0;
+						}
+
+						break;
+
+					case Balancus:
+						weeklyExtraBudget = weeklyExtraBudget / 2.0;
+						break;
+
 				}
-				
+
 			}
 
-			
 		} else if (DateTimeUtil.isSameDay(
 				agent.getModel().params.initialSimulationTime,
 				agent.getSimulationTime())) { // if simulation has just started
@@ -145,12 +144,13 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 		} else { // unemployed so the financial status is unstable
 			status = FinancialStatus.Unstable;
 		}
-		
+
 		// delete unnecessary charge objects
 		Iterator<Charge> listIter = currentCharges.iterator();
-		LocalDateTime today = agent.getSimulationTime().withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0);
-		
-		while(listIter.hasNext()) {
+		LocalDateTime today = agent.getSimulationTime().withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0)
+				.withMillisOfSecond(0);
+
+		while (listIter.hasNext()) {
 			if (listIter.next().getDate().isBefore(today) == true) {
 				listIter.remove();
 			}
@@ -172,9 +172,8 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 		// There are two reasons why financial safety would be an issue
 		// 1 - unemployment
 		// 2 - low paying job
-		
-		if (isSatisfied() == false) {
 
+		if (isSatisfied() == false) {
 
 			if (isEmployed() == false) { // this is case 1 - unemployment
 
@@ -194,42 +193,42 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 				}
 
 			} else { // this is case 2 - low paying job or expensive apartment
-				
+
 				/*
-				 *  This means the agent is employed but it is not satisfactory enough to survive.
-				 *  There are two possible options to do here:
-				 *  1. Find a better paying job
-				 *  2. Move to a cheaper house
-				 *  
-				 *  We flip a coin and choose one of these options 
-				 *  but first make sure none of these two are already requested.
+				 * This means the agent is employed but it is not satisfactory enough to
+				 * survive.
+				 * There are two possible options to do here:
+				 * 1. Find a better paying job
+				 * 2. Move to a cheaper house
+				 * 
+				 * We flip a coin and choose one of these options
+				 * but first make sure none of these two are already requested.
 				 */
-				
-				boolean changeJobInstructed = agent.getInstructionQueue().instructionTypeExists(new ChangeJobInstruction(null));
-				boolean changeApartmentInstructed = agent.getInstructionQueue().instructionTypeExists(new ChangeApartmentInstruction(false));
-				
-				
+
+				boolean changeJobInstructed = agent.getInstructionQueue()
+						.instructionTypeExists(new ChangeJobInstruction(null));
+				boolean changeApartmentInstructed = agent.getInstructionQueue()
+						.instructionTypeExists(new ChangeApartmentInstruction(false));
+
 				if (changeJobInstructed == false && changeApartmentInstructed == false) {
 					boolean coin = agent.getModel().random.nextBoolean();
-					
+
 					if (coin == true) { // option 1.
-						
+
 						Job job = searchJobBasedOnAgentCharacteristic(false);
-						
+
 						if (job != null) {
 							ChangeJobInstruction changeJobInstruction = new ChangeJobInstruction(job);
 							agent.getInstructionQueue().add(changeJobInstruction);
 						}
-					}
-					else {  // option 2.
+					} else { // option 2.
 						ChangeApartmentInstruction changeApartmentInstruction = new ChangeApartmentInstruction(true);
 						agent.getInstructionQueue().add(changeApartmentInstruction);
 					}
 				}
-				
-				
+
 				if (agent.getTodaysPlan().cameBackFromWork() == true) {
-					
+
 					Job job = searchJobBasedOnAgentCharacteristic(true);
 					if (job != null) {
 						// we found a better paying job. Let's quit the current
@@ -240,7 +239,7 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 				}
 			}
 		}
-		
+
 		if (agent.isInInitializationMode() == false) {
 			checkWorkSchedule();
 		}
@@ -273,8 +272,10 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 				// logger.info("Traveling to work." + getAgentId() + "-" +
 				// model.getSimulationTime().toString("E - Hm"));
 				Travel travel = new Travel(agent.getLocation(), agent
-						.getWorkplace().getLocation(), getJob()
-						.getDailyWorkLengthHour(), VisitReason.Workplace_Work);
+						.getWorkplace().getLocation(),
+						getJob()
+								.getDailyWorkLengthHour(),
+						VisitReason.Workplace_Work);
 				agent.getMobility().beginToTransport(travel, PersonMode.AtWork,
 						agent.getWorkplace(), true);
 
@@ -294,56 +295,57 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 	 * A method that finds jobs based on agent's characteristics.
 	 * 
 	 * @param betterPayingJob
-	 *            if this is set to true, agent might choose a better paying job
-	 *            even though it requires lower education
+	 *                        if this is set to true, agent might choose a better
+	 *                        paying job
+	 *                        even though it requires lower education
 	 * @return
 	 */
 	private Job searchJobBasedOnAgentCharacteristic(boolean betterPayingJob) {
 		Job job = null;
 		switch (agent.getCharacteristic()) {
-		case Sociolus:
+			case Sociolus:
 
-			if (agent.getShelterNeed().isSatisfied() == true) {
-				job = findJob(JobSearchCriteria.Proximity, false,
-						agent.getNeighborhoodId(), betterPayingJob);
-			} else {
-				job = findJob(JobSearchCriteria.FirstAvailable, false,
-						agent.getNeighborhoodId(), betterPayingJob);
-			}
-
-			if (job == null) {
-				// now look for jobs globally since we couldn't find anything in
-				// the neighborhood, we still look for proximity if agent has
-				// home
 				if (agent.getShelterNeed().isSatisfied() == true) {
-					job = findJob(JobSearchCriteria.Proximity, false,
-							betterPayingJob);
+					job = findJob(JobSearchCriteria.Proximity, true,
+							agent.getNeighborhoodId(), betterPayingJob);
 				} else {
-					job = findJob(JobSearchCriteria.FirstAvailable, false,
+					job = findJob(JobSearchCriteria.FirstAvailable, true,
+							agent.getNeighborhoodId(), betterPayingJob);
+				}
+
+				if (job == null) {
+					// now look for jobs globally since we couldn't find anything in
+					// the neighborhood, we still look for proximity if agent has
+					// home
+					if (agent.getShelterNeed().isSatisfied() == true) {
+						job = findJob(JobSearchCriteria.Proximity, true,
+								betterPayingJob);
+					} else {
+						job = findJob(JobSearchCriteria.FirstAvailable, true,
+								betterPayingJob);
+					}
+				}
+
+				break;
+
+			case Balancus:
+
+				job = findJob(JobSearchCriteria.HighestPaying, true,
+						agent.getNeighborhoodId(), betterPayingJob);
+
+				if (job == null) {
+					// now look for jobs globally since we couldn't find anything in
+					// the neighborhood
+					job = findJob(JobSearchCriteria.HighestPaying, true,
 							betterPayingJob);
 				}
-			}
 
-			break;
+				break;
 
-		case Balancus:
-
-			job = findJob(JobSearchCriteria.HighestPaying, false,
-					agent.getNeighborhoodId(), betterPayingJob);
-
-			if (job == null) {
-				// now look for jobs globally since we couldn't find anything in
-				// the neighborhood
-				job = findJob(JobSearchCriteria.HighestPaying, false,
+			case Croesus:
+				job = findJob(JobSearchCriteria.HighestPaying, true,
 						betterPayingJob);
-			}
-
-			break;
-
-		case Croesus:
-			job = findJob(JobSearchCriteria.HighestPaying, true,
-					betterPayingJob);
-			break;
+				break;
 		}
 		return job;
 	}
@@ -372,7 +374,7 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 		}
 
 		for (Job jb : filledJobsInTheWorklace) {
-			
+
 			agent.getModel()
 					.getWorkNetwork()
 					.addEdge(agent.getAgentId(), jb.getWorker().getAgentId(),
@@ -469,12 +471,11 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 										// to share the rest of the rental
 			// significantFinancialChangeHappened = true;
 			depositMoney(amount, "RentAdjustment");
-		}
-		else {
+		} else {
 			depositMoney(amount, "Wage");
 		}
 	}
-	
+
 	public void depositMoney(double amount, String reason) {
 		availableBalance += amount;
 		agent.writeIncomeToFile(amount, reason);
@@ -497,42 +498,44 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 		return availableBalance > amount;
 	}
 	/*
-	public double getTotalChargesSinceBeginningOfThisMonth() {
-		LocalDateTime now = agent.getSimulationTime();
-		LocalDateTime firstDayOfMonth = now.withDayOfMonth(1);
-		return getTotalChargesBetweenDates(firstDayOfMonth, now);
-	}
-
-	public double getTotalChargesSinceBeginningOfThisMonth(ExpenseType type) {
-		return currentCharges
-				.stream()
-				.filter(p -> DateTimeUtil.isSameMonth(p.getDate(),
-						agent.getSimulationTime())
-						&& p.getExpenseType() == type)
-				.mapToDouble(Charge::getAmount).sum();
-	}
-*/
+	 * public double getTotalChargesSinceBeginningOfThisMonth() {
+	 * LocalDateTime now = agent.getSimulationTime();
+	 * LocalDateTime firstDayOfMonth = now.withDayOfMonth(1);
+	 * return getTotalChargesBetweenDates(firstDayOfMonth, now);
+	 * }
+	 * 
+	 * public double getTotalChargesSinceBeginningOfThisMonth(ExpenseType type) {
+	 * return currentCharges
+	 * .stream()
+	 * .filter(p -> DateTimeUtil.isSameMonth(p.getDate(),
+	 * agent.getSimulationTime())
+	 * && p.getExpenseType() == type)
+	 * .mapToDouble(Charge::getAmount).sum();
+	 * }
+	 */
 	/**
 	 * Returns charges made between dates (inclusive)
 	 * 
 	 * @param startDate
-	 *            start date inclusive
+	 *                  start date inclusive
 	 * @param endDate
-	 *            end date inclusive
+	 *                  end date inclusive
 	 * @return
 	 */
-	/*public double getTotalChargesBetweenDates(LocalDateTime startDate,
-			LocalDateTime endDate) {
-		LocalDateTime firstMomentOfDay = startDate.withMillisOfDay(0);
-		LocalDateTime lastMomentOfDay = endDate.withTime(23, 59, 59, 999);
-		return currentCharges
-				.stream()
-				.filter(p -> (p.getDate().isEqual(firstMomentOfDay) || p
-						.getDate().isAfter(firstMomentOfDay))
-						&& (p.getDate().isEqual(lastMomentOfDay) || p.getDate()
-								.isBefore(lastMomentOfDay)))
-				.mapToDouble(Charge::getAmount).sum();
-	}*/
+	/*
+	 * public double getTotalChargesBetweenDates(LocalDateTime startDate,
+	 * LocalDateTime endDate) {
+	 * LocalDateTime firstMomentOfDay = startDate.withMillisOfDay(0);
+	 * LocalDateTime lastMomentOfDay = endDate.withTime(23, 59, 59, 999);
+	 * return currentCharges
+	 * .stream()
+	 * .filter(p -> (p.getDate().isEqual(firstMomentOfDay) || p
+	 * .getDate().isAfter(firstMomentOfDay))
+	 * && (p.getDate().isEqual(lastMomentOfDay) || p.getDate()
+	 * .isBefore(lastMomentOfDay)))
+	 * .mapToDouble(Charge::getAmount).sum();
+	 * }
+	 */
 
 	/**
 	 * Returns charges on given types, made between dates (inclusive)
@@ -542,21 +545,23 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 	 * @param type
 	 * @return
 	 */
-	/*public double getTotalChargesBetweenDates(LocalDateTime startDate,
-			LocalDateTime endDate, ExpenseType type) {
-
-		LocalDateTime firstMomentOfDay = startDate.withMillisOfDay(0);
-		LocalDateTime lastMomentOfDay = endDate.withTime(23, 59, 59, 999);
-		return currentCharges
-				.stream()
-				.filter(p -> (p.getDate().isEqual(firstMomentOfDay) || p
-						.getDate().isAfter(firstMomentOfDay))
-						&& (p.getDate().isEqual(lastMomentOfDay) || p.getDate()
-								.isBefore(lastMomentOfDay))
-						&& p.getExpenseType() == type)
-				.mapToDouble(Charge::getAmount).sum();
-
-	}*/
+	/*
+	 * public double getTotalChargesBetweenDates(LocalDateTime startDate,
+	 * LocalDateTime endDate, ExpenseType type) {
+	 * 
+	 * LocalDateTime firstMomentOfDay = startDate.withMillisOfDay(0);
+	 * LocalDateTime lastMomentOfDay = endDate.withTime(23, 59, 59, 999);
+	 * return currentCharges
+	 * .stream()
+	 * .filter(p -> (p.getDate().isEqual(firstMomentOfDay) || p
+	 * .getDate().isAfter(firstMomentOfDay))
+	 * && (p.getDate().isEqual(lastMomentOfDay) || p.getDate()
+	 * .isBefore(lastMomentOfDay))
+	 * && p.getExpenseType() == type)
+	 * .mapToDouble(Charge::getAmount).sum();
+	 * 
+	 * }
+	 */
 
 	public double getTotalChargesByDay(LocalDateTime dateTime, ExpenseType type) {
 		return currentCharges
@@ -571,14 +576,15 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 				.filter(p -> DateTimeUtil.isSameDay(p.getDate(), dateTime))
 				.mapToDouble(Charge::getAmount).sum();
 	}
-	
+
 	public double getTotalChargesToday(ExpenseType type) {
 		return getTotalChargesByDay(agent.getSimulationTime(), type);
 	}
 	/*
-	public double getTotalChargesToday() {
-		return getTotalChargesByDay(agent.getSimulationTime());
-	}*/
+	 * public double getTotalChargesToday() {
+	 * return getTotalChargesByDay(agent.getSimulationTime());
+	 * }
+	 */
 
 	private Job findJob(JobSearchCriteria criteria,
 			boolean acceptLowerEducation, boolean betterPayingJobs) {
@@ -622,38 +628,39 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 			jobs = jobs
 					.stream()
 					.filter(p -> p.getHourlyRate() > agent.getJob()
-							.getHourlyRate()).collect(Collectors.toList());
+							.getHourlyRate())
+					.collect(Collectors.toList());
 		}
 
 		allAvailableJobs = jobs;
 		CollectionUtil.shuffle(allAvailableJobs, agent.getModel().random);
 
 		switch (criteria) {
-		case FirstAvailable:
-			if (allAvailableJobs.size() > 0) {
-				return allAvailableJobs.get(0);
-			}
-			break;
-		case Proximity:
-			SpatialNetwork spatialNetwork = agent.getModel()
-					.getSpatialNetwork();
-			double shortestDistance = 999999999;
-			Job closestJob = null;
-
-			for (Job jb : allAvailableJobs) {
-				double dist = spatialNetwork.getDistance(agent.getShelter()
-						.getLocation(), jb.getWorkplace().getLocation(), true);
-
-				if (dist < shortestDistance) {
-					shortestDistance = dist;
-					closestJob = jb;
+			case FirstAvailable:
+				if (allAvailableJobs.size() > 0) {
+					return allAvailableJobs.get(0);
 				}
-			}
+				break;
+			case Proximity:
+				SpatialNetwork spatialNetwork = agent.getModel()
+						.getSpatialNetwork();
+				double shortestDistance = 999999999;
+				Job closestJob = null;
 
-			return closestJob;
-		case HighestPaying:
-			return allAvailableJobs.stream()
-					.max(Comparator.comparing(Job::getHourlyRate)).orElse(null);
+				for (Job jb : allAvailableJobs) {
+					double dist = spatialNetwork.getDistance(agent.getShelter()
+							.getLocation(), jb.getWorkplace().getLocation(), true);
+
+					if (dist < shortestDistance) {
+						shortestDistance = dist;
+						closestJob = jb;
+					}
+				}
+
+				return closestJob;
+			case HighestPaying:
+				return allAvailableJobs.stream()
+						.max(Comparator.comparing(Job::getHourlyRate)).orElse(null);
 		}
 
 		return null;
@@ -687,11 +694,11 @@ public class FinancialSafetyNeed implements Need, java.io.Serializable {
 	public double getWeeklyExtraBudget() {
 		return weeklyExtraBudget;
 	}
-	
+
 	public void reduceWeeklyExtraBudget(double amount) {
 		weeklyExtraBudget -= amount;
 	}
-	
+
 	public void kill() {
 		this.agent = null;
 		this.job = null;

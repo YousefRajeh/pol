@@ -78,7 +78,7 @@ public class Pub extends BuildingUnit {
 	@Override
 	public void agentArrives(Person agent, double visitLength) {
 		super.agentArrives(agent, visitLength);
-		
+
 		if (model.getQuantitiesOfInterest() != null) {
 			// counter at the bar
 			model.getQuantitiesOfInterest().incrementPubVisitCount();
