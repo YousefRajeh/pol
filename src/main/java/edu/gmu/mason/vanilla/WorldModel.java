@@ -498,7 +498,7 @@ public class WorldModel extends SimState {
 							.generateHourlyRate(educationLevel);
 					int hour = 7 + random.nextInt(2);
 					int minute = random.nextInt(60);
-					int dynamicWorkHoursPerDay = random.nextInt(6) + 4;
+					int dynamicWorkHoursPerDay = random.nextInt(7) + 4;
 					LocalTime jobStartTime = new LocalTime(hour, minute);
 					// LocalTime jobEndTime = jobStartTime.plusHours(params.workHoursPerDay);
 					LocalTime jobEndTime = jobStartTime.plusHours(dynamicWorkHoursPerDay);
