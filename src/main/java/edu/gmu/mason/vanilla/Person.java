@@ -241,7 +241,8 @@ public class Person implements Steppable, java.io.Serializable {
 			}
 			financialSafetyNeed.satisfy();
 			loveNeed.satisfy();
-			updateJournalRecord();
+			// updateJournalRecord takes +%50 (1000 agents) to -%20 (10000 agents) CPU time
+			//updateJournalRecord(); 
 		}
 		
 		// bury agents who already exited
