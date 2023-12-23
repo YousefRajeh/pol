@@ -11,5 +11,6 @@
     ],
     "terminal.integrated.env.linux": {
         "GRAALVM_HOME": "/home/emo/Program/java/graallvm/graalvm-ce-java17-22.3.3"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }

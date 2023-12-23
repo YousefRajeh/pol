@@ -452,7 +452,7 @@ public class ReservedLogChannels implements Serializable {
 				// EVENT Journal
 				{"EVT10", new LogSchedule(0, "EVT10", (Supplier & Serializable) () -> "step\tagentId\t[currentShelter,neighborhood,classroom]", textFormatter, 0)},
 				{"EVT10", new IterativeEventLogSchedule(0, 1, "EVT10", (Supplier<Collection<EventList>> & Serializable) () -> eventMovingHome, eventFormatter, 1)},
-				{"EVT11", new LogSchedule(0, "EVT11", (Supplier & Serializable) () -> "step\tagentId\t[job]", textFormatter, 0)},
+				{"EVT11", new LogSchedule(0, "EVT11", (Supplier & Serializable) () -> "step\tagentId\t[job,workingHour]", textFormatter, 0)},
 				{"EVT11", new IterativeEventLogSchedule(0, 1, "EVT11", (Supplier<Collection<EventList>> & Serializable) () -> eventChangingJob, eventFormatter, 1)},
 				// For checkin
 				{"AGENT5", new LogSchedule(0, "AGENT5", (Supplier & Serializable) () -> schema.CheckinDataset.CheckinTable, checkinTableSchema, 0)},
@@ -611,7 +611,7 @@ public class ReservedLogChannels implements Serializable {
 
 		if (eventChangingJob == null) {
 			eventChangingJob = new ArrayList<>();
-			// step agentId [jobId]
+			// step agentId [jobId] workingHour
 			for (Person p : model.getAgents()) {
 				EventList eventList = new EventList(p.getAgentId());
 				eventList.enableIndividualUpdateTime(false);
@@ -619,6 +619,12 @@ public class ReservedLogChannels implements Serializable {
 					Job job = model.getAgent(p.getAgentId()).getJob();
 					if (job != null)
 						return job.getId();
+					return null;
+				});
+				eventList.add((Supplier & Serializable) () -> {
+					Job job = model.getAgent(p.getAgentId()).getJob();
+					if (job != null)
+						return job.getWorkingHours();
 					return null;
 				});
 				eventChangingJob.add(eventList);

@@ -33,6 +33,8 @@ public class Job implements java.io.Serializable {
 	private LocalTime startTime;
 	@Characteristics
 	private LocalTime endTime;
+	@Characteristics 
+	private int workingHours;
 	@Characteristics
 	private List<DayOfWeek> daysToWork;
 	@Characteristics
@@ -116,6 +118,7 @@ public class Job implements java.io.Serializable {
 
 	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
+		setWorkingHours();
 	}
 
 	public EducationLevel getEducationRequirement() {
@@ -148,6 +151,13 @@ public class Job implements java.io.Serializable {
 
 	public boolean isAvailable() {
 		return this.workplace.isUsable() == true;
+	}
+
+	public void setWorkingHours(){
+		this.workingHours = Hours.hoursBetween(this.startTime, this.endTime).getHours();
+	}
+	public int getWorkingHours(){
+		return this.workingHours;
 	}
 
 }

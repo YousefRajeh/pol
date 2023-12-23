@@ -512,6 +512,7 @@ public class WorldModel extends SimState {
 					job.setHourlyRate(hourlyRate);
 					job.setStartTime(jobStartTime);
 					job.setEndTime(jobEndTime);
+					// job.setWorkingHours();
 					job.setEducationRequirement(educationLevel);
 					job.addWorkDays(daysToWork);
 					job.setNeighborhoodId(nId);
