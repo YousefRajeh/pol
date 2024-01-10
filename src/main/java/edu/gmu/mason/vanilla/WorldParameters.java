@@ -44,7 +44,7 @@ public class WorldParameters extends AnnotatedPropertied {
 	// ENVIRONMENT
 	public static final int NUM_APARTMENTS_PER_1000 = 1500;
 	public static final int NUM_WORKPLACES_PER_1000 = 250;
-	public static final int NUM_PUBS_PER_1000 = 10;
+	public static final int NUM_PUBS_PER_1000 = 20;
 	public static final int NUM_RESTAURANTS_PER_1000 = 20;
 	public static final int NUM_OF_AGENTS = 1000;
 	public static final int NUM_OF_AGENT_INTERESTS = 10;
