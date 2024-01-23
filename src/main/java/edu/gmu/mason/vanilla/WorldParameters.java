@@ -75,7 +75,7 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final double BASE_INITIAL_BALANCE = 1500.0;
 	public static final double TARGETED_SAVING_AMOUNT_WITH_RESPECT_TO_RENT = 0.0;
 	public static final int MINIMUM_SITE_VISIT_LENGTH_IN_MINUTES = 20;
-	public static final int MAXIMUM_SITE_VISIT_LENGTH_IN_MINUTES = 180;
+	public static final int MAXIMUM_SITE_VISIT_LENGTH_IN_MINUTES = 360;
 
 	// NETWORK
 	public static final double FOCAL_CLOSURE_PROBABILITY = 0.0025;
@@ -85,8 +85,8 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final double NETWORK_EDGE_WEIGHT_STRENGTHENING_RATE = 0.04;
 	public static final double NETWORK_EDGE_DELETION_THRESHOLD = 0.001;
 	public static final boolean USE_WORK_NETWORK = true;
-	public static final double MAX_NUM_OF_FRIENDS = 40;
-	public static final double MAX_LONELY_DAYS = 7;
+	public static final double MAX_NUM_OF_FRIENDS = 400;
+	public static final double MAX_LONELY_DAYS = 0;
 	public static final double NETWORK_WEIGHT_UPPER_BOUND = 1.0;
 	public static final int STABLE_RELATIONSHIP_PERIOD_IN_MIN = 60;
 
@@ -114,8 +114,8 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final double SOCIAL_STATUS_DECAY_FACTOR = 0.8 * 1.1;
 	public static final double MAX_SOCIAL_STATUS_VALUE = 1.0;
 	public static final double MIN_SOCIAL_STATUS_VALUE = 0.1;
-	public static final double SOCIAL_STATUS_INCREASE_VALUE = 0.07 * 30;   /*** increase by multiplicative factor to get more socialization vs decrease for less socialization  ***/
-	public static final double SOCIAL_STATUS_DECREASE_VALUE = 0.03 * 0.03; /*** decrease by multiplicative factor to get more socialization vs increase for less socialization  ***/
+	public static final double SOCIAL_STATUS_INCREASE_VALUE = 0.07;   /*** increase by multiplicative factor to get more socialization vs decrease for less socialization  ***/
+	public static final double SOCIAL_STATUS_DECREASE_VALUE = 0.03; /*** decrease by multiplicative factor to get more socialization vs increase for less socialization  ***/
 
 	// NEIGHBORHOOD
 	public static final double ATTRACTIVENESS_LOWER_BOUND = 0.0;
@@ -134,8 +134,8 @@ public class WorldParameters extends AnnotatedPropertied {
 	public static final double INITIAL_ADDITIONAL_BALANCE_LOWER_BOUND = 500.0;
 	public static final double INITIAL_ADDITIONAL_BALANCE_UPPER_BOUND = 1000.0;
 
-	public static final int NUM_OF_SINGLE_AGENTS_PER_1000 = 335;
-	public static final int NUM_OF_FAMILY_AGENTS_WITH_KIDS_PER_1000 = 298;
+	public static final int NUM_OF_SINGLE_AGENTS_PER_1000 = 1000;
+	public static final int NUM_OF_FAMILY_AGENTS_WITH_KIDS_PER_1000 = 0;
 
 	public double EDUCATION_REQ_LOW = 10.0;
 	public double EDUCATION_REQ_HS_COLLEGE = EDUCATION_REQ_LOW + 54.0;
