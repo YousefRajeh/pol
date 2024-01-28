@@ -499,14 +499,12 @@ public class WorldModel extends SimState {
 					int hour = 7 + random.nextInt(2);
 					int minute = random.nextInt(60);
 					int dynamicWorkHoursPerDay = random.nextInt(7) + 4;
-					// make hourly rate higher for shorter work days
-					hourlyRate *= (8.0 / dynamicWorkHoursPerDay);
 					LocalTime jobStartTime = new LocalTime(hour, minute);
-					// LocalTime jobEndTime = jobStartTime.plusHours(params.workHoursPerDay);
-					LocalTime jobEndTime = jobStartTime.plusHours(dynamicWorkHoursPerDay);
+					LocalTime jobEndTime = jobStartTime.plusHours(params.workHoursPerDay);
 					List<DayOfWeek> daysToWork = neighborhoodComposition
 							.generateWorkDays(educationLevel);
-
+					// make hourly rate higher for less work days 
+					hourlyRate *= ((5) / daysToWork.size());
 					// System.out.println("Hourly rate: "+ hourlyRate);
 
 					Job job = new Job(workplace, jobId++);

@@ -189,20 +189,20 @@ public class NeighborhoodComposition {
 		double num = uRNG.sample();
 
 		List<DayOfWeek> days = new ArrayList<>();
-		days.add(DayOfWeek.Monday);
+		
 		days.add(DayOfWeek.Tuesday);
 		days.add(DayOfWeek.Wednesday);
 		days.add(DayOfWeek.Thursday);
 		days.add(DayOfWeek.Friday);
 
-		if (num <= mapChancesToHaveDifferentWorkdays.get(level)) {
+		/*if (num <= mapChancesToHaveDifferentWorkdays.get(level)) {
 			days.add(DayOfWeek.Saturday);
 			days.add(DayOfWeek.Sunday);
 			CollectionUtil.shuffle(days, rng.getRandom());
 
 			days.remove(6);
 			days.remove(5);
-		}
+		}*/
 
 		return days;
 	}
