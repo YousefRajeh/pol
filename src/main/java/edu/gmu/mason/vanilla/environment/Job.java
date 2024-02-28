@@ -12,6 +12,8 @@ import edu.gmu.mason.vanilla.Person;
 import edu.gmu.mason.vanilla.log.Characteristics;
 import edu.gmu.mason.vanilla.log.Skip;
 
+import java.util.Random;
+
 /**
  * General description_________________________________________________________
  * This class represents jobs provided in workplaces. Agents can take these jobs
@@ -40,6 +42,8 @@ public class Job implements java.io.Serializable {
 	@Characteristics
 	private EducationLevel educationRequirement;
 	@Characteristics
+	private int vacationDays;
+	@Characteristics
 	private int neighborhoodId;
 
 	public Job(Workplace workplace, long id) {
@@ -50,6 +54,14 @@ public class Job implements java.io.Serializable {
 
 	public boolean isWorkDay(LocalDateTime dt) {
 		int dayId = dt.getDayOfWeek();
+		Random randomno = new Random();
+		int vacation = randomno.nextInt(vacationDays+1);
+		int total = daysToWork.size()*52;
+		float percentage = (float) vacationDays/total;
+		if(percentage > vacation){
+			return false;
+		}
+
 		return checkWorkDay(DayOfWeek.valueOf(dayId));
 	}
 
@@ -65,6 +77,10 @@ public class Job implements java.io.Serializable {
 		for (DayOfWeek day : days) {
 			daysToWork.add(day);
 		}
+	}
+
+	public void addVacationDays(int days) {
+		this.vacationDays = days;
 	}
 
 	public int numberOfWorkdaysAWeek() {

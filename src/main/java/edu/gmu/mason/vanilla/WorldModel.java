@@ -502,7 +502,7 @@ public class WorldModel extends SimState {
 					LocalTime jobStartTime = new LocalTime(hour, minute);
 					LocalTime jobEndTime = jobStartTime.plusHours(params.workHoursPerDay);
 					List<DayOfWeek> daysToWork = neighborhoodComposition
-							.generateWorkDays(educationLevel);
+							.generateWorkDays(educationLevel); //number of vacation days
 					// make hourly rate higher for less work days 
 					hourlyRate *= ((5) / daysToWork.size());
 					// System.out.println("Hourly rate: "+ hourlyRate);
@@ -516,7 +516,7 @@ public class WorldModel extends SimState {
 					job.setEducationRequirement(educationLevel);
 					job.addWorkDays(daysToWork);
 					job.setNeighborhoodId(nId);
-
+					job.addVacationDays(90);
 					workplace.addJob(job);
 					jobs.put(job.getId(), job);
 				}

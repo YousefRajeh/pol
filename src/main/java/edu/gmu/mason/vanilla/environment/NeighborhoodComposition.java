@@ -184,12 +184,12 @@ public class NeighborhoodComposition {
 				params.maximumHourlyRate);
 	}
 
-	public List<DayOfWeek> generateWorkDays(EducationLevel level) {
+	 public List<DayOfWeek> generateWorkDays(EducationLevel level) {
 		UniformRealDistribution uRNG = new UniformRealDistribution(rng, 0, 1);
 		double num = uRNG.sample();
 
 		List<DayOfWeek> days = new ArrayList<>();
-		
+		days.add(DayOfWeek.Monday);
 		days.add(DayOfWeek.Tuesday);
 		days.add(DayOfWeek.Wednesday);
 		days.add(DayOfWeek.Thursday);
@@ -206,6 +206,38 @@ public class NeighborhoodComposition {
 
 		return days;
 	}
+	
+	/*private static final int STANDARD_WORKDAYS_PER_WEEK = 5; // Monday to Friday
+    private static final int TOTAL_WORKDAYS_IN_YEAR = 260; // Approximate number of workdays in a year, excluding weekends
+
+    public List<DayOfWeek> generateWorkDays(int totalVacationDays) {
+        // Assuming rng is defined elsewhere in your class
+        UniformRealDistribution uRNG = new UniformRealDistribution(rng, 0, 1);
+        double num = uRNG.sample();
+		
+        int effectiveWorkDays = calculateEffectiveWorkDays(totalVacationDays);
+        List<DayOfWeek> days = new ArrayList<>();
+
+		
+        // Add workdays based on the calculated effective workdays
+        if (effectiveWorkDays > 0) days.add(DayOfWeek.Monday);
+        if (effectiveWorkDays > 1) days.add(DayOfWeek.Tuesday);
+        if (effectiveWorkDays > 2) days.add(DayOfWeek.Wednesday);
+        if (effectiveWorkDays > 3) days.add(DayOfWeek.Thursday);
+        if (effectiveWorkDays > 4) days.add(DayOfWeek.Friday);
+
+
+        return days;
+    }
+
+    private int calculateEffectiveWorkDays(int totalVacationDays) {
+        int totalEffectiveWorkdays = TOTAL_WORKDAYS_IN_YEAR - totalVacationDays;
+        // Calculate the number of effective work weeks
+        int effectiveWorkWeeks = (int) Math.ceil(totalEffectiveWorkdays / (TOTAL_WORKDAYS_IN_YEAR/STANDARD_WORKDAYS_PER_WEEK));
+        // Return the number of workdays in a typical week adjusted for vacation days
+        return effectiveWorkWeeks;
+    }*/
+
 
 	public double generatePubHourlyCharge() {
 		UniformRealDistribution uRNG = new UniformRealDistribution(rng,
